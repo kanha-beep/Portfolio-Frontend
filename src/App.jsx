@@ -37,17 +37,17 @@ function App() {
     <>
       <Navbar isLogin={isLogin} />
       <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/projects/:projectsId" element={<SingleProjects />} />
+        <Route path="/contacts" element={<Contact />} />
+        <Route path="/blogs" element={<Blog />} />
+        <Route path="/blogs/:blogId" element={<SingleBlogs />} />
         <Route element={<ProtectedRoute />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contacts" element={<Contact />} />
           {/* projects */}
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/projects/:projectsId" element={<SingleProjects />} />
           <Route path="/projects/:projectsId/edit" element={<EditProjects />} />
           {/* blogs */}
-          <Route path="/blogs" element={<Blog />} />
-          <Route path="/blogs/:blogId" element={<SingleBlogs />} />
           <Route path="/blogs/:blogId/edit" element={<EditBlogs />} />
           {/* CMS routes */}
           <Route path="/cms" element={<CMSHome />} />
