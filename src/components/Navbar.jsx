@@ -11,7 +11,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
       const res = await api.post("/auth/logout");
       console.log("logged out: ", res?.data);
       setIsLoggedIn(false);
-      navigate("/home");
+      navigate("/");
     } catch (e) {
       console.log("error lougout: ", e?.response?.data);
     }
