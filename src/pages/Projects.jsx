@@ -28,7 +28,7 @@ export default function Projects({ error, setError }) {
       )}
       <div className="row">
         {projects.map((p) => (
-          <div key={p._id} className="col-md-4 mb-3">
+          <div key={p._id} className="col-md-4 col-12 mb-3">
             <div className="card h-100">
               <h3 className="card-header">{p.title}</h3>
               <div className="card-body">
