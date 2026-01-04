@@ -41,7 +41,7 @@ export default function Home() {
 
       <section className="mt-5">
         <h2>Featured Projects</h2>
-        <div className="row flex-wrap gap-3 mt-3 w-50">
+        <div className="row mt-3">
           {projects.length > 0 ? (
             projects.map((p) => (
               <div key={p._id} className="col-md-4 col-12 mb-3">
