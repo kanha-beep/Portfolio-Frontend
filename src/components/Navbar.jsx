@@ -1,14 +1,17 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
 
 export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
+  const navigate = useNavigate();
   console.log("value: ", isLoggedIn);
   const handleLogout = async () => {
     try {
       const res = await api.post("/auth/logout");
       console.log("logged out: ", res?.data);
       setIsLoggedIn(false);
+      navigate("/home");
     } catch (e) {
       console.log("error lougout: ", e?.response?.data);
     }
