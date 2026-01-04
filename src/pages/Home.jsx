@@ -13,8 +13,13 @@ export default function Home() {
       try {
         const res = await api.get("/projects"); // Backend endpoint
         setProjects(res.data);
+        setLoading(false);
       } catch (err) {
-        console.error("Failed to fetch projects:", err);
+        console.error(
+          "Failed to fetch projects:",
+          err?.response?.data?.message
+        );
+        setLoading(true);
       } finally {
         setLoading(false);
       }
@@ -36,35 +41,27 @@ export default function Home() {
 
       <section className="mt-5">
         <h2>Featured Projects</h2>
-        <div className="d-flex flex-wrap justify-content-center gap-3 mt-3">
+        <div className="d-flex flex-wrap gap-3 mt-3 w-50">
           {projects.length > 0 ? (
-            projects.map((project) => (
-              <Card
-                key={project._id}
-                style={{ width: "18rem" }}
-                className="shadow-sm"
-              >
-                <Card.Body>
-                  <Card.Title>{project.title}</Card.Title>
-                  {/* <Card.Text>{project.description}</Card.Text> */}
-                  <div className="row justify-content-between">
-                    <Button
-                      className="col-md-6 col-12"
-                      variant="primary"
-                      onClick={() => (window.location.href = project.url_1)}
-                    >
-                      First link
-                    </Button>
-                    <Button
-                      className="col-md-6 col-12"
-                      variant="primary"
-                      onClick={() => (window.location.href = project.url_2)}
-                    >
-                      Second Link
-                    </Button>
+            projects.map((p) => (
+              <div key={p._id} className="col-md-4 mb-3">
+                <div className="card h-100">
+                  <h3 className="card-header">{p?.title}</h3>
+                  <div className="card-body">
+                    <p className="card-text">{p?.description}</p>
                   </div>
-                </Card.Body>
-              </Card>
+                  <div className="card-footer">
+                    <button
+                      onClick={() => {
+                        window.open(p?.url_1, "_blank", "noopener, noreferrer");
+                      }}
+                      className="btn btn-outline-success btn-sm"
+                    >
+                      Explore
+                    </button>
+                  </div>
+                </div>
+              </div>
             ))
           ) : (
             <p>No projects available.</p>

@@ -31,12 +31,15 @@ export default function CMSProjects() {
     e.preventDefault();
     if (!newProject.title || !newProject.description)
       return alert("Please enter details");
-    const res = await api.post("/projects", newProject, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    console.log("add project: ", res.data);
-    setProjects([...projects, res.data]);
-    setNewProject({ title: "", description: "" });
+    try {
+      console.log("data: ", newProject);
+      const res = await api.post("/projects", newProject);
+      console.log("add project: ", res.data);
+      setProjects([...projects, res.data]);
+      setNewProject({ title: "", description: "" });
+    } catch (error) {
+      console.log("error in add project", error?.response?.data?.message);
+    }
   };
 
   return (
@@ -72,7 +75,7 @@ export default function CMSProjects() {
           <input
             type="text"
             name="url_2"
-            placeholder="Project Link 2"
+            placeholder="Project Link 2 (Optional)"
             value={newProject.url_2}
             onChange={handleChange}
             className="form-control my-2"

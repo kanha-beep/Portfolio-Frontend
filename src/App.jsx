@@ -23,28 +23,49 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { useEffect, useState } from "react";
 import SingleProjects from "./templates/SingleProjects.jsx";
 import EditProjects from "./templates/EditProjects.jsx";
+import axios from "axios";
 
 function App() {
   const [isAuth, setIsAuth] = useState(false); // toggle login/signup
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState("");
+  const checkAuthStatus = async () => {
+    try {
+      const API_URL = import.meta.env.DEV
+        ? import.meta.env.VITE_API_URL
+        : import.meta.env.VITE_API_URL;
+      const res = await axios.get(`${API_URL}/auth/me`, {
+        withCredentials: true,
+      });
+      console.log("app: ", res?.data);
+      setUser(res?.data);
+      if (res) {
+        setIsLoggedIn(true);
+        // setUser(res?.data);
+      }
+    } catch (error) {
+      console.log("Not authenticated");
+    }
+  };
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) setIsLogin(true);
-    // else setIsAuth(false);
+    checkAuthStatus();
   }, []);
-  console.log("token saved and can use it in app", isLogin, isAuth);
   return (
     <>
-      <Navbar isLogin={isLogin} />
+      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/projects" element={<Projects />} />
+        <Route
+          path="/projects"
+          element={<Projects error={error} setError={setError} />}
+        />
         <Route path="/projects/:projectsId" element={<SingleProjects />} />
         <Route path="/contacts" element={<Contact />} />
         <Route path="/blogs" element={<Blog />} />
         <Route path="/blogs/:blogId" element={<SingleBlogs />} />
-        <Route element={<ProtectedRoute />}>
+        <Route element={<ProtectedRoute isLoggedIn={isLoggedIn} />}>
           {/* projects */}
           <Route path="/projects/:projectsId/edit" element={<EditProjects />} />
           {/* blogs */}
@@ -59,13 +80,19 @@ function App() {
           path="/auth"
           element={
             <Auth
-              setIsLogin={setIsLogin}
               setIsAuth={setIsAuth}
               isAuth={isAuth}
+              setIsLoggedIn={setIsLoggedIn}
+              user={user}
+              setUser={setUser}
+              checkAuthStatus={checkAuthStatus}
             />
           }
         />
-        <Route path="/logout" element={<Logout setIsLogin={setIsLogin} />} />
+        <Route
+          path="/logout"
+          element={<Logout setIsLoggedIn={setIsLoggedIn} />}
+        />
       </Routes>
       <Footer />
     </>

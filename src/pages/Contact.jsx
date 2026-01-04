@@ -1,11 +1,20 @@
 import { useState } from "react";
 import api from "../api";
-import SendContactButton from "../components/buttons/SendContactButton"
+import SendContactButton from "../components/buttons/SendContactButton";
+import { useLocation, useNavigate } from "react-router";
 export default function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const location = useLocation();
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+    projectName: "",
+    projectId: "",
+  });
   const [contactData, setContactData] = useState([]);
-
-  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const projectDetails = location?.state?.project;
+  // console.log("projectDetails:", projectDetails);
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -13,15 +22,17 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      console.log("data sent", form);
-      const res = await api.post("/contacts", form, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const formData = {
+        ...form,
+        projectName: projectDetails?.title || form.projectName,
+        projectId: projectDetails?._id || form.projectId,
+      };
+      const res = await api.post("/contacts", formData);
       console.log("contact received", res.data);
       setContactData((p) => [...p, res.data]);
       setForm({ name: "", email: "", message: "" });
     } catch (e) {
-      console.log("error: ", e.response?.data?.message);
+      console.log("error: ", e.response?.data);
     }
   };
 
@@ -58,19 +69,32 @@ export default function Contact() {
           className="form-control my-2"
           required
         />
+        <div>
+          <p>
+            Project Name: <b>{projectDetails?.title}</b>
+          </p>
+        </div>
         <div className="my-2 mx-auto">
-         <SendContactButton/>
+          <SendContactButton />
         </div>
       </form>
       <section>
         {contactData.length >= 0 &&
           contactData.map((c) => (
-            <div key={c._id}>
-              <h3>This is what you typed</h3>
-              Name: <b>{c.name}</b>
-              <br />
-              Email: <b>{c.email}</b>
-              <br />
+            <div className="">
+              <div key={c._id}>
+                <h3>Contact Sent</h3>
+                Name: <b>{c.name}</b>
+                <br />
+                Email: <b>{c.email}</b>
+                <br />
+              </div>
+              <div className="mt-3 d-flex align-items-center gap-2">
+                <span>Go to</span>
+                <button className="btn btn-primary btn-sm d-flex align-items-center" onClick={()=>navigate("/projects")}>
+                  More Projects
+                </button>
+              </div>
             </div>
           ))}
         {/* {contactData && (
