@@ -7,7 +7,7 @@ export default function Footer() {
         color: "#fff",
         textAlign: "center",
         // position: "fixed",
-        bottom: "0",
+        // bottom: "0",
         width:"100%",
         // zIndex: 1000,
       }}
