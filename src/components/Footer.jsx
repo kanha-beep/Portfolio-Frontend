@@ -6,10 +6,10 @@ export default function Footer() {
         background: "#222",
         color: "#fff",
         textAlign: "center",
-        position: "fixed",
+        // position: "fixed",
         bottom: "0",
         width:"100%",
-        zIndex: 1000,
+        // zIndex: 1000,
       }}
     >
       &copy; {new Date().getFullYear()} My Portfolio
