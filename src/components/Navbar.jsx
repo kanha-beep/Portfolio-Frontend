@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import api from "../api";
 
 export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
@@ -17,32 +17,93 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
     }
   };
   return (
-    <nav style={{ background: "#222" }} className="text-center p-2 text-white text-decoration-none">
-      <Link to="/" style={{ margin: "0 1rem", color: "#fff" }}>
+    <nav style={{ background: "#222" }} className="text-center p-3 text-white">
+      <NavLink
+        to="/"
+        end
+        className="text-decoration-none"
+        style={({ isActive }) => ({
+          margin: "0 1rem",
+          color: "#fff",
+          borderBottom: isActive ? "3px solid #fff" : "3px solid transparent",
+          paddingBottom: "4px",
+        })}
+      >
         Home
-      </Link>
-      <Link to="/about" style={{ margin: "0 1rem", color: "#fff" }}>
+      </NavLink>
+      <NavLink
+        to="/about"
+        className="text-decoration-none"
+        style={({ isActive }) => ({
+          margin: "0 1rem",
+          color: "#fff",
+          borderBottom: isActive ? "3px solid #fff" : "3px solid transparent",
+          paddingBottom: "4px",
+        })}
+      >
         About
-      </Link>
-      <Link to="/projects" style={{ margin: "0 1rem", color: "#fff" }}>
+      </NavLink>
+      <NavLink
+        to="/projects"
+        className="text-decoration-none"
+        style={({ isActive }) => ({
+          margin: "0 1rem",
+          color: "#fff",
+          borderBottom: isActive ? "3px solid #fff" : "3px solid transparent",
+          paddingBottom: "4px",
+        })}
+      >
         Projects
-      </Link>
-      <Link to="/blogs" style={{ margin: "0 1rem", color: "#fff" }}>
+      </NavLink>
+      <NavLink
+        to="/blogs"
+        className="text-decoration-none"
+        style={({ isActive }) => ({
+          margin: "0 1rem",
+          color: "#fff",
+          borderBottom: isActive ? "3px solid #fff" : "3px solid transparent",
+          paddingBottom: "4px",
+        })}
+      >
         Blog
-      </Link>
-      <Link to="/contacts" style={{ margin: "0 1rem", color: "#fff" }}>
+      </NavLink>
+      <NavLink
+        to="/contacts"
+        className="text-decoration-none"
+        style={({ isActive }) => ({
+          margin: "0 1rem",
+          color: "#fff",
+          borderBottom: isActive ? "3px solid #fff" : "3px solid transparent",
+          paddingBottom: "4px",
+        })}
+      >
         Contact
-      </Link>
-      <Link to="/cms" style={{ margin: "0 1rem", color: "#fff" }}>
+      </NavLink>
+      <NavLink
+        to="/cms"
+        className="text-decoration-none"
+        style={({ isActive }) => ({
+          margin: "0 1rem",
+          color: "#fff",
+          borderBottom: isActive ? "3px solid #fff" : "3px solid transparent",
+          paddingBottom: "4px",
+        })}
+      >
         CMS
-      </Link>
+      </NavLink>
       {isLoggedIn ? (
-        <Link
+        <NavLink
           onClick={handleLogout}
-          style={{ margin: "0 1rem", color: "#fff" }}
+          className="text-decoration-none"
+          style={({ isActive }) => ({
+            margin: "0 1rem",
+            color: "#fff",
+            borderBottom: isActive ? "3px solid #fff" : "3px solid transparent",
+            paddingBottom: "4px",
+          })}
         >
           Logout
-        </Link>
+        </NavLink>
       ) : null}
     </nav>
   );
