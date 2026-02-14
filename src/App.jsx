@@ -52,50 +52,58 @@ function App() {
     checkAuthStatus();
   }, []);
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
       <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route
-          path="/projects"
-          element={<Projects error={error} setError={setError} />}
-        />
-        <Route path="/projects/:projectsId" element={<SingleProjects />} />
-        <Route path="/contacts" element={<Contact />} />
-        <Route path="/blogs" element={<Blog />} />
-        <Route path="/blogs/:blogId" element={<SingleBlogs />} />
-        <Route element={<ProtectedRoute isLoggedIn={isLoggedIn} />}>
-          {/* projects */}
-          <Route path="/projects/:projectsId/edit" element={<EditProjects />} />
-          {/* blogs */}
-          <Route path="/blogs/:blogId/edit" element={<EditBlogs />} />
-          {/* CMS routes */}
-          <Route path="/cms" element={<CMSHome />} />
-          <Route path="/cms/projects" element={<CMSProjects />} />
-          <Route path="/cms/blogs" element={<CMSBlog />} />
-        </Route>
-        {/* auth */}
-        <Route
-          path="/auth"
-          element={
-            <Auth
-              setIsAuth={setIsAuth}
-              isAuth={isAuth}
-              setIsLoggedIn={setIsLoggedIn}
-              user={user}
-              setUser={setUser}
-              checkAuthStatus={checkAuthStatus}
+      <div
+        className="
+      "
+      >
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route
+            path="/projects"
+            element={<Projects error={error} setError={setError} />}
+          />
+          <Route path="/projects/:projectsId" element={<SingleProjects />} />
+          <Route path="/contacts" element={<Contact />} />
+          <Route path="/blogs" element={<Blog />} />
+          <Route path="/blogs/:blogId" element={<SingleBlogs />} />
+          <Route element={<ProtectedRoute isLoggedIn={isLoggedIn} />}>
+            {/* projects */}
+            <Route
+              path="/projects/:projectsId/edit"
+              element={<EditProjects />}
             />
-          }
-        />
-        <Route
-          path="/logout"
-          element={<Logout setIsLoggedIn={setIsLoggedIn} />}
-        />
-      </Routes>
+            {/* blogs */}
+            <Route path="/blogs/:blogId/edit" element={<EditBlogs />} />
+            {/* CMS routes */}
+            <Route path="/cms" element={<CMSHome />} />
+            <Route path="/cms/projects" element={<CMSProjects />} />
+            <Route path="/cms/blogs" element={<CMSBlog />} />
+          </Route>
+          {/* auth */}
+          <Route
+            path="/auth"
+            element={
+              <Auth
+                setIsAuth={setIsAuth}
+                isAuth={isAuth}
+                setIsLoggedIn={setIsLoggedIn}
+                user={user}
+                setUser={setUser}
+                checkAuthStatus={checkAuthStatus}
+              />
+            }
+          />
+          <Route
+            path="/logout"
+            element={<Logout setIsLoggedIn={setIsLoggedIn} />}
+          />
+        </Routes>
+      </div>
       <Footer />
-    </>
+    </div>
   );
 }
 
