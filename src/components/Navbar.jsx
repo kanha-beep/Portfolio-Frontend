@@ -17,7 +17,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
     }
   };
   return (
-    <nav style={{ background: "#222" }} className="p-1 text-white">
+    <nav style={{ background: "#222" }} className="p-2 text-white text-decoration-none">
       <Link to="/" style={{ margin: "0 1rem", color: "#fff" }}>
         Home
       </Link>
